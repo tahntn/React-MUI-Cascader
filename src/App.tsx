@@ -21,7 +21,7 @@ function App() {
         onClick={handleClick}
         endIcon={open ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
       >
-        {selectedItems.length > 0 ? selectedItems.map((item: typeData) => item.label).join(" / ") : "Chọn ngành hàng"}
+        {selectedItems.length > 0 ? selectedItems.map((item: typeData) => item.label).join(" / ") : "Select your option"}
       </Button>
       <ListMenu setSelectedItems={setSelectedItems} selectedItems={selectedItems} anchorEl={anchorEl} open={open} handleClose={handleClose} />
     </Box>

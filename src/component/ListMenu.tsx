@@ -1,11 +1,9 @@
 import React from "react";
-import Menu from "@mui/material/Menu";
-import { Box } from "@mui/material";
-import { listMenuProps, typeData } from "../type";
-import MenuItem from "@mui/material/MenuItem";
-
+import { Box, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { listMenuProps, typeData } from "../type";
 import data from "../config/data";
+
 export default function ListMenu(props: listMenuProps) {
   const { anchorEl, open, handleClose, setSelectedItems, selectedItems } =
     props;
@@ -21,23 +19,32 @@ export default function ListMenu(props: listMenuProps) {
   };
   const handleSubmit = () => {
     setSelectedItems(newSelectedItems);
+    handleClose();
   };
   React.useEffect(() => {
     setNewSelectedItems(newSelectedItems);
   }, [selectedItems]);
   return (
-    <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+    <Menu
+      anchorEl={anchorEl}
+      open={open}
+      onClose={() => {
+        handleClose();
+        setNewSelectedItems(selectedItems);
+      }}
+    >
       <Box display={"flex"}>
         <Box display={"flex"} flexDirection={"column"}>
           {data?.map((option: typeData) => (
             <MenuItem
               onMouseEnter={() => handleItemClick(option)}
               style={{
-                color: newSelectedItems[0]?.id === option?.id ? "#1976d2" : "black",
+                color:
+                  newSelectedItems[0]?.id === option?.id ? "#1976d2" : "black",
               }}
             >
               {option.label}
-              {option?.children  ? <KeyboardArrowRightIcon /> : null}
+              {option?.children ? <KeyboardArrowRightIcon /> : null}
             </MenuItem>
           ))}
         </Box>
@@ -57,9 +64,7 @@ export default function ListMenu(props: listMenuProps) {
                   }}
                 >
                   {chil.label}
-                  {chil?.children ? (
-                    <KeyboardArrowRightIcon />
-                  ) : null}
+                  {chil?.children ? <KeyboardArrowRightIcon /> : null}
                 </MenuItem>
               );
             })}
